@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\TreeNodeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,3 +17,6 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/tree', 'App\Http\Controllers\TreeNodeController@showTree');
+Route::post('/submit', 'App\Http\Controllers\TreeNodeController@insertTree');
