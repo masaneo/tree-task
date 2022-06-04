@@ -15,4 +15,8 @@ class TreeNode extends Model
         'parentId',
         'name',
     ];
+
+    public function childs() {
+        return $this -> hasMany(TreeNode::class, 'parentId', 'id');
+    }
 }

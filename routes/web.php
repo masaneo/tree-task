@@ -19,4 +19,7 @@ Route::get('/', function () {
 });
 
 Route::get('/tree', 'App\Http\Controllers\TreeNodeController@showTree');
-Route::post('/submit', 'App\Http\Controllers\TreeNodeController@insertTree');
+Route::post('/add', 'App\Http\Controllers\TreeNodeController@insertNode');
+Route::delete('/delete', 'App\Http\Controllers\TreeNodeController@deleteNode');
+Route::put('/edit', 'App\Http\Controllers\TreeNodeController@editNode');
+Route::put('/move', 'App\Http\Controllers\TreeNodeController@moveNode');
