@@ -18,7 +18,7 @@ class TreeNodeController extends Controller
 
         $tree = $req -> all();
 
-        if(!isset($tree->parentId)){
+        if($tree['parentId'] === null){
             $tree['parentId'] = 0;
         }
 
@@ -30,13 +30,35 @@ class TreeNodeController extends Controller
     }
 
     public function deleteNode(Request $req){
-        $id = $req -> all('id');
+        $id = $req -> input('id');
+        $move = $req->input('moveChildrens');
+        $newParent = $req->input('newParent') !== null ? $req->input('newParent') : 0;
         
-        if(TreeNode::destroy($id)){
-            return back() -> with('succeed', 'Pomyślnie usunięto node');
-        } 
+        if(!isset($move)){ $move = false; }
+        
+        if($move){
+            $childs = TreeNode::where('parentId', '=', $id)->get();
+            foreach($childs as $child){
+                $child->parentId = $newParent;
+                $child->save();
+            }
+            if(TreeNode::destroy($id)){
+                return back() -> with('succeed', 'Pomyślnie usunięto node i przeniesiono dzieci');
+            } else {
+                return back() -> with('failed', 'Nie udało się wykonać danej operacji');
+            }
+        } else {
+            $childIds = $this -> findAllChildrens($id);
+            foreach($childIds as $childId){
+                TreeNode::destroy($childId);
+            }
 
-        return back() -> with('failed', 'Nie udało się usunąć node');
+            TreeNode::destroy($id);
+
+            return back() -> with('succeed', 'Pomyślnie usunięto node i jego dzieci');
+        }
+
+        return  back() -> with('failed', 'Nie udało wykonać się danej operacji');
     }
 
     public function editNode(Request $req){

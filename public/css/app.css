@@ -22,3 +22,14 @@
     top: 30%;
     left: 25%;
 }
+
+.question-div{
+    display: flex;
+    align-items: center;
+    margin-left: 3px;
+}
+
+.question-div label{
+    margin-left: 5px;
+    margin-top: 5px;
+}
