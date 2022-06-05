@@ -5,6 +5,7 @@
 
 .treeview{
     background-color: #f3f3f3;
+    font-size: 1.5rem;
 }
 
 .form-div{
@@ -21,6 +22,7 @@
     width: 50%;
     top: 30%;
     left: 25%;
+    font-size: 2rem;
 }
 
 .question-div{
@@ -32,4 +34,26 @@
 .question-div label{
     margin-left: 5px;
     margin-top: 5px;
+}
+
+.collapse-button{
+    border: 0;
+    font-size: 1.3rem;
+    font-weight: bold;
+    filter: drop-shadow(1px 1px 1px rgba(33, 44, 55, 30));
+    border-radius: 20%;
+    width: 20px;
+    height: 20px;
+    line-height: 8px;
+    text-align: center;
+    display: inline-block;
+    padding: 1px;
+}
+
+.collapse-button:focus {
+    outline: 0;
+  }
+
+.header{
+    height: 5%;
 }

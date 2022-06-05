@@ -12,6 +12,18 @@
     </head>
     <body>
         <div class="container-fluid">
+            <div class="row header">
+                <div class="col-3">
+                    {{ Form::open(['url' => 'exampleTree', 'method' => 'post']) }}
+                        {{ Form::submit('Stwórz przykładowe drzewo', ['class' => 'btn']) }}
+                    {{ Form::close() }}
+                </div>
+                <div class="col-3">
+                    {{ Form::open(['url' => 'deleteTree', 'method' => 'delete']) }}
+                        {{ Form::submit('Usuń wszystkie node', ['class' => 'btn']) }}
+                    {{ Form::close() }}
+                </div>
+            </div>
             <div class="row">
                 <div class="treeview col-12">
                     @include('treenodes', ['nodes' => $root])
@@ -40,8 +52,8 @@
                             {{ Form::select('id', $tree, old('id'), ['class' => 'custom-select','placeholder' => 'Wybierz node do usunięcia', 'required' => 'required']) }}
                         </div>
                         <div class="form-group question-div">
-                            {{ Form::checkbox('moveChildrens', 'true', false, ['id' => 'moveChildrens']) }}
-                            {{ Form::label('move-childs', 'Czy chcesz przenieść ewentualne dzieci?') }}
+                            {{ Form::checkbox('move-children', 'true', false, ['id' => 'move-children']) }}
+                            {{ Form::label('move-children', 'Czy chcesz przenieść ewentualne dzieci?') }}
                         </div>
                         <div class="form-group new-parent">
                             {{ Form::select('newParent', $tree, old('newParent'), ['class' => 'custom-select', 'id' => 'select-new-parent', 'placeholder' => 'Wybierz nowego rodzica']) }}

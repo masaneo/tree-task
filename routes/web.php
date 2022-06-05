@@ -23,3 +23,5 @@ Route::post('/add', 'App\Http\Controllers\TreeNodeController@insertNode');
 Route::delete('/delete', 'App\Http\Controllers\TreeNodeController@deleteNode');
 Route::put('/edit', 'App\Http\Controllers\TreeNodeController@editNode');
 Route::put('/move', 'App\Http\Controllers\TreeNodeController@moveNode');
+Route::post('/exampleTree', 'App\Http\Controllers\TreeNodeController@createExampleTree');
+Route::delete('/deleteTree', 'App\Http\Controllers\TreeNodeController@deleteAllNodes');

@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\DB;
 use App\Models\TreeNode;
 use Illuminate\Http\Request;
 
 class TreeNodeController extends Controller
 {
     public function showTree(){
-        $root = TreeNode::where('parentId', '=', '0')->get();
-        $tree = TreeNode::pluck('name', 'id')->all();
+        $root = TreeNode::where('parentId', '=', '0') -> get();
+        $tree = TreeNode::pluck('name', 'id') -> all();
 
         return view('treeview', compact('tree', 'root'));
     }
@@ -31,15 +32,15 @@ class TreeNodeController extends Controller
 
     public function deleteNode(Request $req){
         $id = $req -> input('id');
-        $move = $req->input('moveChildrens');
-        $newParent = $req->input('newParent') !== null ? $req->input('newParent') : 0;
+        $move = $req -> input('move-children');
+        $newParent = $req -> input('newParent') !== null ? $req -> input('newParent') : 0;
         
         if(!isset($move)){ $move = false; }
         
         if($move){
-            $childs = TreeNode::where('parentId', '=', $id)->get();
-            foreach($childs as $child){
-                $child->parentId = $newParent;
+            $children = TreeNode::where('parentId', '=', $id) -> get();
+            foreach($children as $child){
+                $child -> parentId = $newParent;
                 $child->save();
             }
             if(TreeNode::destroy($id)){
@@ -48,8 +49,8 @@ class TreeNodeController extends Controller
                 return back() -> with('failed', 'Nie udało się wykonać danej operacji');
             }
         } else {
-            $childIds = $this -> findAllChildrens($id);
-            foreach($childIds as $childId){
+            $childrenIds = $this -> findAllChildren($id);
+            foreach($childrenIds as $childId){
                 TreeNode::destroy($childId);
             }
 
@@ -68,7 +69,7 @@ class TreeNodeController extends Controller
 
         $node->name = $data['name'];
 
-        if($node->save()){
+        if($node -> save()){
             return back() -> with('succeed', 'Udało się edytować node');
         }
 
@@ -81,14 +82,14 @@ class TreeNodeController extends Controller
         
         if(!isset($targetNode)){
             $targetNode = new TreeNode;
-            $targetNode->id = 0;
+            $targetNode -> id = 0;
         }
 
-        if(in_array($targetNode -> id, $this -> findAllChildrens($moveNode->id))){
+        if(in_array($targetNode -> id, $this -> findAllChildren($moveNode -> id))){
             return back() -> with('failed', 'Docelowy node jest potomkiem wybranego node');
         }
 
-        if($moveNode->id === $targetNode -> id){
+        if($moveNode -> id === $targetNode -> id){
             return back() -> with('failed', 'Wybrano dwa razy ten sam node');
         }
         
@@ -99,16 +100,42 @@ class TreeNodeController extends Controller
         return back() -> with('succeed', 'Przeniesiono node');
     }
 
-    public function findAllChildrens($id){
+    public function findAllChildren($id){
         $parent = TreeNode::find($id);
 
         $childrenIds = [];
 
-        foreach($parent->childs as $children){
-            $childrenIds[] = $children -> id;
-            $childrenIds = array_merge($childrenIds, $this->findAllChildrens($children->id));
+        foreach($parent -> childs as $child){
+            $childrenIds[] = $child -> id;
+            $childrenIds = array_merge($childrenIds, $this -> findAllChildren($child -> id));
         }
 
         return($childrenIds);
+    }
+
+    public function createExampleTree(){
+        $nodes = TreeNode::all();
+        if(!empty($nodes[0])){
+            return back() -> with('failed', 'Najpierw usuń wszystkie node');
+        }
+
+        DB::select('call createExampleTree();');
+        $nodes = TreeNode::all();
+
+        if(empty($nodes[0])){
+            return back() -> with('failed', 'Nie udało się załadować drzewa');
+        }
+
+        return back() -> with('succeed', 'Pomyślnie załadowano przykładowe drzewo');
+    }
+
+    public function deleteAllNodes(){
+        DB::select('call deleteAllNodes();');
+
+        $nodes = TreeNode::all();
+        if(empty($nodes[0])){
+            return back() -> with('succeed', 'Usunięto wszystkie node');
+        }
+        return back() -> with('failed', 'Operacja nie powiodła się');
     }
 }
