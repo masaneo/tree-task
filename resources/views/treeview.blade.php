@@ -13,23 +13,21 @@
     <body>
         <div class="container-fluid">
             <div class="row header">
-                <div class="col-3">
+                <div class="col-4 d-flex">
                     {{ Form::open(['url' => 'exampleTree', 'method' => 'post']) }}
-                        {{ Form::submit('Stwórz przykładowe drzewo', ['class' => 'btn']) }}
+                        {{ Form::submit('Stwórz przykładowe drzewo', ['class' => 'btn btn-secondary']) }}
                     {{ Form::close() }}
-                </div>
-                <div class="col-3">
                     {{ Form::open(['url' => 'deleteTree', 'method' => 'delete']) }}
-                        {{ Form::submit('Usuń wszystkie node', ['class' => 'btn']) }}
+                        {{ Form::submit('Usuń wszystkie node', ['class' => 'btn btn-secondary']) }}
                     {{ Form::close() }}
                 </div>
             </div>
-            <div class="row">
-                <div class="treeview col-12">
+            <div class="row treeview">
+                <div class="col-12">
                     @include('treenodes', ['nodes' => $root])
                 </div>
             </div>
-            <div class="row">
+            <div class="row forms-row">
                 <div class="col-3 form-div">
                     <h4>Dodaj nowy node</h4>
                     {{ Form::open(['url' => 'add']) }}
@@ -90,6 +88,11 @@
                             {{ Form::submit('Przenieś', ['class' => 'btn btn-primary btn-block', 'id' => 'move-button']) }}
                         </div>
                     {{ Form::close() }}
+                </div>
+            </div>
+            <div class="row footer">
+                <div class="col-12">
+                    stopka
                 </div>
             </div>
 
