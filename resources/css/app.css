@@ -1,0 +1,67 @@
+.treeview{
+    background-color: #d9d9d9;
+    font-size: 1.5rem;
+    height: 65%;
+    overflow-y: scroll;
+}
+
+.form-div{
+    display: block;
+    text-align: center;
+}
+
+.alert-custom{
+    position: absolute !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 30%;
+    width: 50%;
+    top: 30%;
+    left: 25%;
+    font-size: 2rem;
+}
+
+.question-div{
+    display: flex;
+    align-items: center;
+    margin-left: 3px;
+}
+
+.question-div label{
+    margin-left: 5px;
+    margin-top: 5px;
+}
+
+.collapse-button{
+    border: 0;
+    font-size: 1.3rem;
+    font-weight: bold;
+    
+    border-radius: 20%;
+    width: 20px;
+    height: 20px;
+    line-height: 8px;
+    text-align: center;
+    display: inline-block;
+    padding: 1px;
+    background-color: #d9d9d9;
+}
+
+.collapse-button:focus {
+    outline: 0;
+  }
+
+.header{
+    height: 5%;
+    background-color: #6c757d;
+}
+
+.forms-row{
+    background-color: #ebe9e9;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 30%;
+    padding-top: 10px;
+}
