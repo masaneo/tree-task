@@ -23,6 +23,10 @@ class TreeNodeController extends Controller
             $tree['parentId'] = 0;
         }
 
+        if(!isset($tree['name'])){
+            return back() -> with('failed', 'Nazwa nie może być pusta');
+        }
+
         if(TreeNode::create($tree)){
             return back() -> with('succeed', 'Udało się utworzyć node');
         };
@@ -64,6 +68,10 @@ class TreeNodeController extends Controller
 
     public function editNode(Request $req){
         $data = $req -> all();
+
+        if(!isset($data['name'])){
+            return back() -> with('failed', 'Nazwa nie może być pusta');
+        }
 
         $node = TreeNode::find($data['id']);
 
@@ -119,7 +127,7 @@ class TreeNodeController extends Controller
             return back() -> with('failed', 'Najpierw usuń wszystkie node');
         }
 
-        DB::select('call createExampleTree();');
+        DB::unprepared('call createExampleTree();');
         $nodes = TreeNode::all();
 
         if(empty($nodes[0])){
@@ -130,7 +138,7 @@ class TreeNodeController extends Controller
     }
 
     public function deleteAllNodes(){
-        DB::select('call deleteAllNodes();');
+        DB::unprepared('call deleteAllNodes();');
 
         $nodes = TreeNode::all();
         if(empty($nodes[0])){

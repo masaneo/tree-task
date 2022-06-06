@@ -1,7 +1,7 @@
 .treeview{
     background-color: #d9d9d9;
     font-size: 1.5rem;
-    height: 60%;
+    height: 65%;
     overflow-y: scroll;
 }
 
@@ -37,7 +37,7 @@
     border: 0;
     font-size: 1.3rem;
     font-weight: bold;
-    filter: drop-shadow(1px 1px 1px rgba(33, 44, 55, 30));
+    
     border-radius: 20%;
     width: 20px;
     height: 20px;
@@ -60,16 +60,8 @@
 .forms-row{
     background-color: #ebe9e9;
     position: fixed;
-    bottom: 6%;
-    width: 100%;
-    height: 29%;
-    padding-top: 10px;
-}
-
-.footer{
-    position: fixed;
-    width: 100%;
     bottom: 0;
-    height: 6%;
-    background-color: #f1f1f1;
+    width: 100%;
+    height: 30%;
+    padding-top: 10px;
 }

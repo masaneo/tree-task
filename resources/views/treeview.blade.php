@@ -24,7 +24,20 @@
             </div>
             <div class="row treeview">
                 <div class="col-12">
-                    @include('treenodes', ['nodes' => $root])
+                    {{ Form::open(['url' => 'tree', 'method' => 'get'])}}
+                        {{ Form::label('Sortowanie:') }}
+                        {{ Form::submit('asc', ['class' => 'btn btn-primary', 'value' => 'sort', 'name' => 'sortOrder']) }}
+                        {{ Form::submit('desc', ['class' => 'btn btn-primary', 'value' => 'sort', 'name' => 'sortOrder']) }}
+                        {{ Form::submit('noSort', ['class' => 'btn btn-primary', 'value' => 'sort', 'name' => 'sortOrder']) }}
+                        @if (isset($_GET['sortOrder']) && $_GET['sortOrder'] === 'asc')
+                            @include('treenodes', ['nodes' => $root -> sortBy('name'), 'sortOrder' => 'asc'])
+                        @elseif(isset($_GET['sortOrder']) && $_GET['sortOrder'] === 'desc')
+                            @include('treenodes', ['nodes' => $root -> sortByDesc('name'), 'sortOrder' => 'desc'])
+                        @else
+                            @include('treenodes', ['nodes' => $root])
+                        @endif
+                        
+                    {{ Form::close() }}
                 </div>
             </div>
             <div class="row forms-row">
@@ -88,11 +101,6 @@
                             {{ Form::submit('Przenieś', ['class' => 'btn btn-primary btn-block', 'id' => 'move-button']) }}
                         </div>
                     {{ Form::close() }}
-                </div>
-            </div>
-            <div class="row footer">
-                <div class="col-12">
-                    stopka
                 </div>
             </div>
 
